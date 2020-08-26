@@ -13,6 +13,8 @@ import {
     TouchableOpacity,
     Alert
 } from "react-native";
+import Tts from 'react-native-tts';
+
 import { GiftedChat, Message } from "react-native-gifted-chat";
 
 const BOT_USER = {
@@ -21,7 +23,7 @@ const BOT_USER = {
     avatar: require("./assets/chatBot.png"),
 };
 
-var welcomeText = "Hello! I am your Personal Healthcare Companion";
+var welcomeText = "Welcome to Medicinator! How can I help you today?";
 
 class ChatBot extends Component {
 
@@ -129,11 +131,20 @@ class ChatBot extends Component {
         this.setState((prvState) => ({
             messages: GiftedChat.append(prvState.messages, [message]),
         }));
+        Tts.speak(text);
+
     }
 
     componentDidMount() {
-
-    }
+        console.log('\n\n\n\n\nVOICES*****************************');
+        Tts.getInitStatus().then(() => {
+          Tts.speak('Welcome to Medicinator! How can I help you today?');
+        });
+       // Tts.voices().then((voices) => console.log(voices));
+        Tts.setDucking(true);
+        Tts.setDefaultLanguage('hi-IN');
+        Tts.setDefaultRate(0.6);
+      }
 
 
 
