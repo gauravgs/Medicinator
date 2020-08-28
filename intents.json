@@ -1,0 +1,170 @@
+{
+    "intents": [{
+            "tag": "noanswer",
+            "utterances": [],
+            "answers": [
+                "Sorry, I couldn't understand you",
+                "Pardon me, I couldn't understand you"
+            ]
+        },
+        {
+            "tag": "welcome",
+            "utterances": [
+                "hello",
+                "hi",
+                "hey",
+                "hi there",
+                "greetings",
+                "yo"
+            ],
+            "answers": [
+                "Hi! What can I do for you?",
+                "Hey! How can I help you?",
+                "Hey there! Do you need any help?",
+                "Greetings! What can I do for you?",
+                "Great, how can I help?"
+            ]
+        },
+        {
+            "tag": "goodbye",
+            "utterances": [
+                "Goodbye",
+                "goodbye for now",
+                "Thank you for helping. Goodbye",
+                "Bye",
+                "okay see you later",
+                "bye for now",
+                "i must go"
+            ],
+            "answers": [
+                "Goodbye.",
+                "Until next time",
+                "See you soon!",
+                "See you next time."
+            ]
+        },
+        {
+            "tag": "chatbot",
+            "utterances": [
+                "are you a bot",
+                "are you a chatbot",
+                "you are a robot",
+                "are you a program",
+                "you are just a robot",
+                "you are just a chatbot"
+            ],
+            "answers": [
+                "Indeed I am. I'll be here whenever you need me"
+            ]
+        },
+        {
+            "tag": "chatbot.clever",
+            "utterances": [
+                "how smart are you",
+                "are you qualified",
+                "you are so smart",
+                "you have a lot of knowledge",
+                "you know a lot",
+                "you are very smart",
+                "you are intelligent",
+                "you're a smart cookie"
+            ],
+            "answers": [
+                "Thank you. I try my best",
+                "You're pretty smart yourself!"
+            ]
+        },
+        {
+            "tag": "chatBot.existance",
+            "utterances": [
+                "why are you",
+                "who are you",
+                "why do you exist"
+            ],
+
+            "answers": [
+                "I am your personal Medical Assistant",
+                "I am an Intelligent ChatBot to assist you in the medical field"
+            ]
+        },
+        {
+            "tag": "diagnosis.start",
+            "utterances": [
+                "I'm not feeling well"
+            ],
+
+            "answers": [
+                "I'll help you",
+                "Let me help you"
+            ]
+        },
+        {
+            "tag": "doctor.find",
+            "utterances": [
+                "find me a doctor",
+                "find a doctor for me",
+                "i need a doctor",
+                "doctor please",
+                "find a doctor",
+                "in need of a doctor"
+            ],
+
+            "answers": [
+                "Please specify the type of doctor you want to consult.",
+                "What type of doctor do you need",
+                "Please specify specialization of doctor you want to consult"
+            ]
+        },
+        {
+            "tag": "ambulance.find",
+            "utterances": [
+                "i need an ambulance",
+                "find me an ambulance",
+                "need an ambulance ASAP",
+                "get me an ambulance",
+                "ambulance urgent",
+                "in need of an ambulance",
+                "need ambulance"
+            ],
+
+            "answers": [
+                "Ambulance on its way",
+                "Calling for an ambulance",
+                "Ambulance will be at your location at the earliest",
+                "routing ambulance",
+                "working on it, calling an ambulance"
+            ]
+        },
+        {
+            "tag": "medicine.alternate",
+            "utterances": [
+                "suggest alternate medicine",
+                "suggest substitute medicine",
+                "find alternative medicine",
+                "find medicine alternate",
+                "find substitute medicine",
+                "find me an alternate medicine",
+                "i need an alternate medicine"
+            ],
+
+            "answers": [
+                "Please provide name of medicine",
+                "What is the name of medicine whose alternate you need?"
+            ]
+        },
+        {
+            "tag": "prescription.view",
+            "utterances": [
+                "prescription",
+                "show me past prescriptions",
+                "can i see my prescriptions",
+                "show my medicines"
+            ],
+
+            "answers": [
+                "Here are your past prescriptions",
+                "Have a look at your past precriptions"
+            ]
+        }
+    ]
+}
