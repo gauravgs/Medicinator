@@ -232,7 +232,8 @@ class ChatBot extends Component {
             backgroundColor: '#d2f7e6',
           },
           right: {
-            backgroundColor: '#d2f2f7',
+            // backgroundColor: '#bfebf2',
+            backgroundColor: '#aae8f2',
           },
         }}
         textStyle={{
@@ -249,6 +250,12 @@ class ChatBot extends Component {
   render() {
     const RenderGiftedChat = (
       <>
+        <StatusBar
+          barStyle="dark-content"
+          hidden={false}
+          backgroundColor="white"
+          translucent={true}
+        />
         <View style={{flex: 1, backgroundColor: '#ffffff'}}>
           <ImageBackground
             source={require('./assets/memphis-colorful.png')}

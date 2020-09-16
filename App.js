@@ -5,6 +5,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import Login from './Login';
 import {NavigationContainer} from '@react-navigation/native';
@@ -17,6 +18,13 @@ export default class App extends React.Component {
   render() {
     return (
       <>
+        <StatusBar
+          barStyle="light-content"
+          hidden={false}
+          backgroundColor="white"
+          translucent={true}
+        />
+
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
