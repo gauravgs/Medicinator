@@ -115,24 +115,36 @@ class ChatBot extends Component {
   };
   async generateResponses(query) {
     var result;
-    let apiCall = 'https://medicinator.herokuapp.com/getResponse?text=';
+    let apiCall = 'https://medicinator.herokuapp.com/getResponse?object=';
     console.log(query);
     if (this.state.nextContext === 'medicine.alternate') {
-      apiCall = 'https://medicinator.herokuapp.com/getAlternate?query=';
+      apiCall = 'https://medicinator.herokuapp.com/getAlternate?object=';
     } else if (this.state.nextContext === 'diagnosis.start') {
-      apiCall = 'https://medicinator.herokuapp.com/getDiagnosis?query=';
+      apiCall = 'https://medicinator.herokuapp.com/getDiagnosis?object=';
       this.setState({isVisible: true});
     } else if (this.state.nextContext === 'doctor.find') {
       alert('Context is ' + this.state.nextContext);
     } else if (this.state.nextContext === 'ambulance.find') {
       alert('Context is ' + this.state.nextContext);
     } else {
-      apiCall = 'https://medicinator.herokuapp.com/getResponse?text=';
+      apiCall = 'https://medicinator.herokuapp.com/getResponse?object=';
     }
 
-    await fetch(apiCall + query, {
-      method: 'GET',
-    })
+    await fetch(
+      apiCall +
+        '{"intent":' +
+        '"' +
+        this.state.nextContext +
+        '"' +
+        ', "query":' +
+        '"' +
+        query +
+        '"' +
+        '}',
+      {
+        method: 'GET',
+      },
+    )
       .then((response) => response.json())
       .then((responseJson) => {
         console.log('Fetch response======>\t', responseJson);
