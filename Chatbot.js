@@ -217,7 +217,7 @@ class ChatBot extends Component {
         <View style={{flex: 1, backgroundColor: '#ffffff'}}>
           <ImageBackground
             source={require('./assets/pattern.png')}
-            resizeMode="repeat"
+            resizeMode="stretch"
             style={{width: '100%', height: '100%'}}>
             <GiftedChat
               messages={this.state.messages}
