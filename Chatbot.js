@@ -18,6 +18,7 @@ import Tts from 'react-native-tts';
 import Modal from 'react-native-modal';
 import MultiSelect from 'react-native-multiple-select';
 import {GiftedChat, Message} from 'react-native-gifted-chat';
+import {Bubble} from 'react-native-gifted-chat';
 
 const BOT_USER = {
   _id: 2,
@@ -222,16 +223,39 @@ class ChatBot extends Component {
     Tts.setDefaultLanguage('hi-IN');
     Tts.setDefaultRate(0.6);
   }
-
+  renderBubble(props) {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          left: {
+            backgroundColor: '#d2f7e6',
+          },
+          right: {
+            backgroundColor: '#d2f2f7',
+          },
+        }}
+        textStyle={{
+          right: {
+            color: 'black',
+          },
+          left: {
+            color: 'black',
+          },
+        }}
+      />
+    );
+  }
   render() {
     const RenderGiftedChat = (
       <>
         <View style={{flex: 1, backgroundColor: '#ffffff'}}>
           <ImageBackground
-            source={require('./assets/pattern.png')}
+            source={require('./assets/memphis-colorful.png')}
             resizeMode="stretch"
             style={{width: '100%', height: '100%'}}>
             <GiftedChat
+              renderBubble={this.renderBubble}
               messages={this.state.messages}
               onSend={(messages) => this.onSend(messages)}
               user={{_id: 1}}
