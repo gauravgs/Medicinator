@@ -129,12 +129,9 @@ class ChatBot extends Component {
     } else if (this.state.nextContext === 'ambulance.find') {
       alert('Context is ' + this.state.nextContext);
       apiCall = 'https://medicinator.herokuapp.com/findAmbulance?object=';
-    } else if (this.state.nextContext === 'health.tips') {
-      alert('Context is ' + this.state.nextContext);
-      apiCall = 'https://medicinator.herokuapp.com/findHealthTips';
     } else if (this.state.nextContext === 'covid.stats') {
       alert('Context is ' + this.state.nextContext);
-      apiCall = 'https://medicinator.herokuapp.com/findCovidStats';
+      apiCall = 'https://medicinator.herokuapp.com/findCovidStats?object=';
     } else {
       apiCall = 'https://medicinator.herokuapp.com/getResponse?object=';
     }
