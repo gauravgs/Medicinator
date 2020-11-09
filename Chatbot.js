@@ -121,12 +121,20 @@ class ChatBot extends Component {
     if (this.state.nextContext === 'medicine.alternate') {
       apiCall = 'https://medicinator.herokuapp.com/getAlternate?object=';
     } else if (this.state.nextContext === 'diagnosis.start') {
-      apiCall = 'https://medicinator.herokuapp.com/getDiagnosis?object=';
+      apiCall = 'https://medicinator.herokuapp.com/predictDisease?object=';
       this.setState({isVisible: true});
     } else if (this.state.nextContext === 'doctor.find') {
-      alert('Context is ' + this.state.nextContext);
+      console.log('Context is ' + this.state.nextContext);
+      apiCall = 'https://medicinator.herokuapp.com/findDoctor?object=';
     } else if (this.state.nextContext === 'ambulance.find') {
       alert('Context is ' + this.state.nextContext);
+      apiCall = 'https://medicinator.herokuapp.com/findAmbulance?object=';
+    } else if (this.state.nextContext === 'health.tips') {
+      alert('Context is ' + this.state.nextContext);
+      apiCall = 'https://medicinator.herokuapp.com/findHealthTips';
+    } else if (this.state.nextContext === 'covid.stats') {
+      alert('Context is ' + this.state.nextContext);
+      apiCall = 'https://medicinator.herokuapp.com/findCovidStats';
     } else {
       apiCall = 'https://medicinator.herokuapp.com/getResponse?object=';
     }

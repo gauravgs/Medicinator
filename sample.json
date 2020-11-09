@@ -1,0 +1,3 @@
+ww.w.ubfb.com/getAlternate?object={"query": "Mylanta", "intent": "medicine.find"}
+
+response--> {"response":[array of alternate meds......],"intent":"welcome"}
