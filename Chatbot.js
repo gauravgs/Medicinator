@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, { Component, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -17,8 +17,10 @@ import {
 import Tts from 'react-native-tts';
 import Modal from 'react-native-modal';
 import MultiSelect from 'react-native-multiple-select';
-import {GiftedChat, Message} from 'react-native-gifted-chat';
-import {Bubble} from 'react-native-gifted-chat';
+import { GiftedChat, Message } from 'react-native-gifted-chat';
+import { Bubble } from 'react-native-gifted-chat';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const BOT_USER = {
   _id: 2,
@@ -28,49 +30,10 @@ const BOT_USER = {
 
 var welcomeText = 'Welcome to Medicinator! How can I help you today?';
 
-const items = [
-  {
-    id: '92iijs7yta',
-    name: 'Ondo',
-  },
-  {
-    id: 'a0s0a8ssbsd',
-    name: 'Ogun',
-  },
-  {
-    id: '16hbajsabsd',
-    name: 'Calabar',
-  },
-  {
-    id: 'nahs75a5sg',
-    name: 'Lagos',
-  },
-  {
-    id: '667atsas',
-    name: 'Maiduguri',
-  },
-  {
-    id: 'hsyasajs',
-    name: 'Anambra',
-  },
-  {
-    id: 'djsjudksjd',
-    name: 'Benue',
-  },
-  {
-    id: 'sdhyaysdj',
-    name: 'Kaduna',
-  },
-  {
-    id: 'suudydjsjd',
-    name: 'Abuja',
-  },
-];
-
-class ChatBot extends Component {
+class Chatbot extends Component {
   constructor(props) {
     super(props);
-
+    this.props=props;
     this.state = {
       messages: [
         {
@@ -96,6 +59,10 @@ class ChatBot extends Component {
     this.custom = false;
     this.noalternate = 'No Alternate Found in Database';
     this.savedModel = null;
+
+    this.generateResponses=this.generateResponses.bind(this);
+    this.onSend=this.onSend.bind(this);
+    this.setResponse=this.setResponse.bind(this);
   }
 
   // findAlternates(drugName) {
@@ -112,8 +79,9 @@ class ChatBot extends Component {
   //     return [this.noalternate];
   // }
   onSelectedItemsChange = (selectedItems) => {
-    this.setState({selectedItems});
+    this.setState({ selectedItems });
   };
+
   async generateResponses(query) {
     var result;
     let apiCall = 'https://medicinator.herokuapp.com/getResponse?object=';
@@ -121,16 +89,16 @@ class ChatBot extends Component {
     if (this.state.nextContext === 'medicine.alternate') {
       apiCall = 'https://medicinator.herokuapp.com/getAlternate?object=';
     } else if (this.state.nextContext === 'diagnosis.start') {
-      apiCall = 'https://medicinator.herokuapp.com/predictDisease?object=';
-      this.setState({isVisible: true});
+      apiCall = 'https://medicinator.herokuapp.com/getResponse?object=';
+      this.setState({ isVisible: false });
     } else if (this.state.nextContext === 'doctor.find') {
-      console.log('Context is ' + this.state.nextContext);
+      // console.log('Context is ' + this.state.nextContext);
       apiCall = 'https://medicinator.herokuapp.com/findDoctor?object=';
     } else if (this.state.nextContext === 'ambulance.find') {
-      alert('Context is ' + this.state.nextContext);
+      // alert('Context is ' + this.state.nextContext);
       apiCall = 'https://medicinator.herokuapp.com/findAmbulance?object=';
     } else if (this.state.nextContext === 'covid.stats') {
-      alert('Context is ' + this.state.nextContext);
+      // alert('Context is ' + this.state.nextContext);
       apiCall = 'https://medicinator.herokuapp.com/findCovidStats?object=';
     } else {
       apiCall = 'https://medicinator.herokuapp.com/getResponse?object=';
@@ -138,15 +106,15 @@ class ChatBot extends Component {
 
     await fetch(
       apiCall +
-        '{"intent":' +
-        '"' +
-        this.state.nextContext +
-        '"' +
-        ', "query":' +
-        '"' +
-        query +
-        '"' +
-        '}',
+      '{"intent":' +
+      '"' +
+      this.state.nextContext +
+      '"' +
+      ', "query":' +
+      '"' +
+      query +
+      '"' +
+      '}',
       {
         method: 'GET',
       },
@@ -159,6 +127,7 @@ class ChatBot extends Component {
         this.setState({
           nextContext: responseJson.intent,
         });
+        this.intent=responseJson.intent;
       })
       .catch((error) => {
         console.error(error);
@@ -191,6 +160,8 @@ class ChatBot extends Component {
 
     this.setResponse(answer);
     console.log(answer + ' from onsend');
+    console.log("props == >");
+    console.log(this.props.navigation);
   }
 
   setResponse(text, intent) {
@@ -212,6 +183,25 @@ class ChatBot extends Component {
     Tts.speak(text).catch((e) => {
       alert(`Can't Play Audio at the moment! 🙄`);
     });
+
+    if (this.intent === 'diagnosis.start') {
+      Alert.alert('Confirm',
+        'Do you want to start disease prediction?',
+        [
+          {
+            text: 'Yes, please!',
+            onPress: () => {
+              this.props.navigation.navigate('PredictDisease');
+              this.setState({ isVisible: true });
+            }
+          },
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          }
+        ]);
+    }
   }
 
   componentDidMount() {
@@ -228,6 +218,7 @@ class ChatBot extends Component {
     Tts.setDefaultLanguage('hi-IN');
     Tts.setDefaultRate(0.6);
   }
+
   renderBubble(props) {
     return (
       <Bubble
@@ -252,6 +243,8 @@ class ChatBot extends Component {
       />
     );
   }
+
+
   render() {
     const RenderGiftedChat = (
       <>
@@ -261,16 +254,16 @@ class ChatBot extends Component {
           backgroundColor="white"
           translucent={true}
         />
-        <View style={{flex: 1, backgroundColor: '#ffffff'}}>
+        <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
           <ImageBackground
             source={require('./assets/memphis-colorful.png')}
             resizeMode="stretch"
-            style={{width: '100%', height: '100%'}}>
+            style={{ width: '100%', height: '100%' }}>
             <GiftedChat
               renderBubble={this.renderBubble}
               messages={this.state.messages}
               onSend={(messages) => this.onSend(messages)}
-              user={{_id: 1}}
+              user={{ _id: 1 }}
               renderCustomView={this.renderCustomView}
               isTyping={true}
               infiniteScroll={true}
@@ -281,58 +274,15 @@ class ChatBot extends Component {
       </>
     );
 
+    
+
     return (
       <>
         {RenderGiftedChat}
-        <View>
-          <Modal
-            isVisible={this.state.isVisible}
-            animationIn="slideInUp"
-            onBackdropPress={() => {
-              this.setState({isVisible: false});
-            }}>
-            <View
-              style={{
-                flex: 1,
-                marginTop: '40%',
-                padding: 25,
-                backgroundColor: 'white',
-                marginBottom: '40%',
-                borderRadius: 25,
-              }}>
-              <MultiSelect
-                hideTags
-                items={items}
-                uniqueKey="id"
-                ref={(component) => {
-                  this.multiSelect = component;
-                }}
-                onSelectedItemsChange={this.onSelectedItemsChange}
-                selectedItems={this.state.selectedItems}
-                selectText="Pick Symptoms......"
-                searchInputPlaceholderText="Search Symptoms..."
-                onChangeInput={(text) => console.log(text)}
-                altFontFamily="ProximaNova-Light"
-                tagRemoveIconColor="#CCC"
-                tagBorderColor="#CCC"
-                tagTextColor="#CCC"
-                selectedItemTextColor="blue"
-                selectedItemIconColor="#808080"
-                itemTextColor="#000"
-                displayKey="name"
-                searchInputStyle={{color: '#CCC'}}
-                submitButtonColor="black"
-                submitButtonText="Submit"
-              />
-              <View>
-                <Text>{this.state.selectedItems}</Text>
-              </View>
-            </View>
-          </Modal>
-        </View>
+
       </>
     );
   }
 }
 
-export default ChatBot;
+export default Chatbot;
